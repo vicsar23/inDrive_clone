@@ -27,11 +27,11 @@ class LoginContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _rotatedText(1, "Inciar sesión", Colors.white),
+              _rotatedText(context,1, "Login", Colors.white, 'login_page', 27, FontWeight.bold),
               SizedBox(
                 height: sizeScreen.height * 0.1,
               ),
-              _rotatedText(1, "Registro", Colors.white),
+              _rotatedText(context,1, "Registro", Colors.white, 'register_page', 25, FontWeight.normal),
             ],
           ),
         ),
@@ -51,43 +51,46 @@ class LoginContent extends StatelessWidget {
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25), bottomLeft: Radius.circular(25))),
         child: Container(
+          height: sizeScreen.height,
           padding: EdgeInsets.only(top: 50, left: 35, right: 35),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _textWelcome("Bienvenido"),
-              _textWelcome("de nuevo"),
-              Container(
-                  alignment: Alignment.centerRight,
-                  child: Image.asset(
-                    "assets/img/car.png",
-                    width: 150,
-                    height: 150,
-                  )),
-              _textWelcome("Iniciar sesión"),
-              CustomTextField(
-                title: "Correo",
-                icon: Icons.email_rounded,
-              ),
-              CustomTextField(
-                title: "Contraseña",
-                icon: Icons.lock,
-                margin: EdgeInsets.only(top: 40, left: 4, right: 4),
-              ),
-              Spacer(),
-              DefaulButton(text: "Iniciar sesión"),
-              SizedBox(
-                height: 10,
-              ),
-              _separatorOr(),
-              SizedBox(
-                height: 10,
-              ),
-              _textDontHaveAccount(),
-              SizedBox(
-                height: 20,
-              )
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _textWelcome("Bienvenido"),
+                _textWelcome("de nuevo"),
+                Container(
+                    alignment: Alignment.centerRight,
+                    child: Image.asset(
+                      "assets/img/car.png",
+                      width: 150,
+                      height: 150,
+                    )),
+                _textWelcome("Iniciar sesión"),
+                CustomTextField(
+                  title: "Correo",
+                  icon: Icons.email_rounded,
+                ),
+                CustomTextField(
+                  title: "Contraseña",
+                  icon: Icons.lock,
+                  margin: EdgeInsets.only(top: 40, left: 4, right: 4),
+                ),
+                SizedBox(height: sizeScreen.height*0.2,),
+                DefaulButton(text: "Iniciar sesión"),
+                SizedBox(
+                  height: 10,
+                ),
+                _separatorOr(),
+                SizedBox(
+                  height: 10,
+                ),
+                _textDontHaveAccount(context),
+                SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -95,7 +98,7 @@ class LoginContent extends StatelessWidget {
   }
 }
 
-Widget _textDontHaveAccount() {
+Widget _textDontHaveAccount(BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -105,7 +108,9 @@ Widget _textDontHaveAccount() {
       ),
       SizedBox(width: 10),
       InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, 'register_page');
+        },
         child: Text(
           "Regístrate",
           style: TextStyle(color: Colors.white, fontSize: 17),
@@ -147,14 +152,19 @@ Widget _textWelcome(String text) {
   );
 }
 
-Widget _rotatedText(
-    final int quarterTurns, final String text, final Color textColor) {
-  return RotatedBox(
-    quarterTurns: quarterTurns,
-    child: Text(
-      text,
-      style: TextStyle(
-          color: textColor, fontSize: 26, fontWeight: FontWeight.bold),
+Widget _rotatedText(BuildContext context,
+    final int quarterTurns, final String text, final Color textColor, String routeName, double fontSize, FontWeight fontWeight ) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(context, routeName);
+    },
+    child: RotatedBox(
+      quarterTurns: quarterTurns,
+      child: Text(
+        text,
+        style: TextStyle(
+            color: textColor, fontSize: fontSize, fontWeight: fontWeight),
+      ),
     ),
   );
 }

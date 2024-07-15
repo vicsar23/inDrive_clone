@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-
   final String title;
-  final IconData  icon;
+  final IconData icon;
   final EdgeInsetsGeometry margin;
-  const CustomTextField({super.key, required this.title, required this.icon, this.margin = const EdgeInsets.only(top: 40, left: 4, right: 4)});
+  Function(String text) onChanged;
+
+  CustomTextField(
+      {super.key,
+      required this.title,
+      required this.icon,
+      this.margin = const EdgeInsets.only(top: 40, left: 4, right: 4),
+      required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +24,9 @@ class CustomTextField extends StatelessWidget {
             topLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
       ),
       child: TextFormField(
+        onChanged: (text){
+          onChanged(text);
+        },
         decoration: InputDecoration(
           border: InputBorder.none,
           label: Text(title),

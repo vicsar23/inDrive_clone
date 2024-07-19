@@ -5,13 +5,15 @@ class CustomTextField extends StatelessWidget {
   final IconData icon;
   final EdgeInsetsGeometry margin;
   Function(String text) onChanged;
+  String? Function(String?)? validator;
 
   CustomTextField(
       {super.key,
       required this.title,
       required this.icon,
       this.margin = const EdgeInsets.only(top: 40, left: 4, right: 4),
-      required this.onChanged});
+      required this.onChanged, 
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class CustomTextField extends StatelessWidget {
             topLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
       ),
       child: TextFormField(
+        validator: validator,
         onChanged: (text){
           onChanged(text);
         },

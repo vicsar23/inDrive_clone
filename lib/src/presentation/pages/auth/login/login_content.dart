@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_bloc.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_event.dart';
+import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_state.dart';
+import 'package:indrive_clone/src/presentation/utils/bloc_form_item.dart';
 import 'package:indrive_clone/src/presentation/widgets/widgets_export.dart';
 
 class LoginContent extends StatelessWidget {
-
-  LoginBloc? bloc;
-  LoginContent(this.bloc);
+  LoginState? state;
+  LoginContent(this.state, {super.key});
 
   @override
   Widget build(BuildContext context) {
     Size sizeScreen = MediaQuery.of(context).size;
     return Form(
-      key: bloc?.state.formKey,
+      key: state?.formKeyLogin,
       child: Stack(children: [
         Container(
           height: sizeScreen.height,
@@ -33,8 +35,8 @@ class LoginContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _rotatedText(context, 1, "Login", Colors.white, 'login_page', 27,
-                    FontWeight.bold),
+                _rotatedText(context, 1, "Login", Colors.white, 'login_page',
+                    27, FontWeight.bold),
                 SizedBox(
                   height: sizeScreen.height * 0.1,
                 ),
@@ -57,7 +59,8 @@ class LoginContent extends StatelessWidget {
                 ],
               ),
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25), bottomLeft: Radius.circular(25))),
+                  topLeft: Radius.circular(25),
+                  bottomLeft: Radius.circular(25))),
           child: Container(
             height: sizeScreen.height,
             padding: EdgeInsets.only(top: 50, left: 35, right: 35),
@@ -76,15 +79,24 @@ class LoginContent extends StatelessWidget {
                       )),
                   _textWelcome("Iniciar sesión"),
                   CustomTextField(
-                    onChanged: (text){
-                      bloc?.add(EmailChanged(email: text));
+                    validator: (value) {
+                      return state?.email.error;
+                    },
+                    onChanged: (text) {
+                      context
+                          .read<LoginBloc>()
+                          .add(EmailChanged(email: BlocFormItem(value: text)));
                     },
                     title: "Correo",
                     icon: Icons.email_rounded,
                   ),
                   CustomTextField(
-                    onChanged: (text){
-                      bloc?.add(PasswordChanged(password: text));
+                    validator: (value) {
+                      return state?.password.error;
+                    },
+                    onChanged: (text) {
+                      context.read<LoginBloc>().add(
+                          PasswordChanged(password: BlocFormItem(value: text)));
                     },
                     title: "Contraseña",
                     icon: Icons.lock,
@@ -93,9 +105,16 @@ class LoginContent extends StatelessWidget {
                   SizedBox(
                     height: sizeScreen.height * 0.2,
                   ),
-                  DefaulButton(text: "Iniciar sesión", onPressed: (){
-                    bloc?.add(FormSubmit());
-                  },),
+                  DefaulButton(
+                    text: "Iniciar sesión",
+                    onPressed: () {
+                      if (state!.formKeyLogin!.currentState!.validate()) {
+                        context.read<LoginBloc>().add(FormSubmit());
+                      } else {
+                        print("El formulario no es válido");
+                      }
+                    },
+                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -128,7 +147,7 @@ Widget _textDontHaveAccount(BuildContext context) {
       SizedBox(width: 10),
       InkWell(
         onTap: () {
-          Navigator.pushNamed(context, 'register_page');
+          Navigator.pushReplacementNamed(context, 'register_page');
         },
         child: Text(
           "Regístrate",
@@ -181,7 +200,7 @@ Widget _rotatedText(
     FontWeight fontWeight) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, routeName);
+      Navigator.pushReplacementNamed(context, routeName);
     },
     child: RotatedBox(
       quarterTurns: quarterTurns,

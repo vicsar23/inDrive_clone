@@ -1,15 +1,17 @@
+import 'package:indrive_clone/src/presentation/utils/bloc_form_item.dart';
+
 abstract class LoginEvent {}
 
 class LoginInitEvent extends LoginEvent {}
 
 class EmailChanged extends LoginEvent {
-  final String email;
+  final BlocFormItem email;
 
   EmailChanged({required this.email});
 }
 
 class PasswordChanged extends LoginEvent {
-  final String password;
+  final BlocFormItem password;
 
   PasswordChanged({required this.password});
 }

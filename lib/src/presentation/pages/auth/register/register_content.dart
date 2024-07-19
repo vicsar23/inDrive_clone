@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/register/bloc/register_bloc.dart';
@@ -64,7 +65,7 @@ class RegisterContent extends StatelessWidget {
                   child: Column(
                     children: [
                       _imageBanner(),
-                      CustomTextFieldOutline(
+                      CustomTextField(
                         onChanged: (text) {
                           context.read<RegisterBloc>().add(
                               NameChanged(name: BlocFormItem(value: text)));
@@ -76,7 +77,7 @@ class RegisterContent extends StatelessWidget {
                         icon: Icons.person_2,
                         margin: EdgeInsets.only(top: 30, left: 15, right: 15),
                       ),
-                      CustomTextFieldOutline(
+                      CustomTextField(
                         validator: (value) {
                           return state.sourceName.error;
                         },
@@ -88,7 +89,7 @@ class RegisterContent extends StatelessWidget {
                         icon: Icons.person_2,
                         margin: EdgeInsets.only(top: 20, left: 15, right: 15),
                       ),
-                      CustomTextFieldOutline(
+                      CustomTextField(
                         validator: (value) {
                           return state.email.error;
                         },
@@ -100,19 +101,19 @@ class RegisterContent extends StatelessWidget {
                         icon: Icons.email,
                         margin: EdgeInsets.only(top: 20, left: 15, right: 15),
                       ),
-                      CustomTextFieldOutline(
+                      CustomTextField(
                         validator: (value) {
                           return state.phone.error;
                         },
                         onChanged: (text) {
-                          context.read<RegisterBloc>().add(
-                              PhoneChangedRegister(phone: BlocFormItem(value: text)));
+                          context.read<RegisterBloc>().add(PhoneChangedRegister(
+                              phone: BlocFormItem(value: text)));
                         },
                         title: 'Teléfono',
                         icon: Icons.email,
                         margin: EdgeInsets.only(top: 20, left: 15, right: 15),
                       ),
-                      CustomTextFieldOutline(
+                      CustomTextField(
                         validator: (value) {
                           return state.password.error;
                         },
@@ -125,7 +126,7 @@ class RegisterContent extends StatelessWidget {
                         icon: Icons.lock,
                         margin: EdgeInsets.only(top: 20, left: 15, right: 15),
                       ),
-                      CustomTextFieldOutline(
+                      CustomTextField(
                         validator: (value) {
                           return state.confirmPassword.error;
                         },
@@ -151,7 +152,9 @@ class RegisterContent extends StatelessWidget {
                                   .read<RegisterBloc>()
                                   .add(FormResetRegister());
                             } else {
-                              print("El formulario no es válido");
+                              if (kDebugMode) {
+                                print("El formulario no es válido");
+                              }
                             }
                           },
                           text: 'Crear Cuenta',

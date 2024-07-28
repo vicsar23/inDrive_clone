@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:indrive_clone/src/data/dataSource/remote/services/auth_service.dart';
+import 'package:indrive_clone/src/domain/useCases/auth/login_use_case.dart';
 import 'package:indrive_clone/src/domain/utils/resource.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_event.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_state.dart';
@@ -9,7 +9,7 @@ import 'package:indrive_clone/src/presentation/utils/bloc_form_item.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final formKey = GlobalKey<FormState>();
-  AuthService authService = AuthService();
+  LoginUseCase loginUseCase = LoginUseCase();
 
   LoginBloc() : super(LoginState()) {
     on<LoginInitEvent>((event, emit) {
@@ -42,7 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       await Future.delayed(Duration(seconds: 2));
       Resource response =
-          await authService.login(state.email.value, state.password.value);
+          await loginUseCase.run(state.email.value, state.password.value);
 
       emit(state.copyWith(response: response, formKeyLogin: formKey));
     });

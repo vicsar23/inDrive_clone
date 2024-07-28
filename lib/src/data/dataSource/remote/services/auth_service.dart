@@ -3,9 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:indrive_clone/src/data/api/api_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:indrive_clone/src/domain/models/auth_response.dart';
+import 'package:indrive_clone/src/domain/utils/list_to_string.dart';
+import 'package:indrive_clone/src/domain/utils/resource.dart';
 
 class AuthService {
-  Future<AuthResponse?> login(String email, String password) async {
+  Future<Resource<AuthResponse>> login(String email, String password) async {
     try {
       Uri uri = Uri.http(ApiConfig.API, ApiConfig.login);
 
@@ -16,16 +18,20 @@ class AuthService {
 
       final data = json.decode(response.body);
 
-      AuthResponse authResponse = AuthResponse.fromJson(data);
-      if (kDebugMode) {
-        print("AuthResponse: ${authResponse.toJson()}");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        AuthResponse authResponse = AuthResponse.fromJson(data);
+        if (kDebugMode) {
+          print("AuthResponse: ${authResponse.toJson()}");
+        }
+        return Success(authResponse);
+      } else {
+        return ErrorData(listToString(data['message']));
       }
-      return authResponse;
     } catch (error) {
       if (kDebugMode) {
         print(error);
       }
-      return null;
+      return ErrorData(error.toString());
     }
   }
 }

@@ -184,7 +184,8 @@ class RegisterContent extends StatelessWidget {
 Widget _textIAlreadyHaveAccount(BuildContext context) {
   return InkWell(
     onTap: () {
-      Navigator.of(context).pushReplacementNamed('login_page');
+      //Navigator.of(context).pushReplacementNamed('login_page');
+      Navigator.pop(context);
     },
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -259,7 +260,8 @@ Widget _imageBackground() {
 Widget _textLoginRotated(BuildContext context) {
   return GestureDetector(
     onTap: () {
-      Navigator.of(context).pushReplacementNamed('login_page');
+      //Navigator.of(context).pushReplacementNamed('login_page');
+      Navigator.pop(context);
     },
     child: RotatedBox(
       quarterTurns: 1,

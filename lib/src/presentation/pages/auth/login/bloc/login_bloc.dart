@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indrive_clone/src/data/dataSource/remote/services/auth_service.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_event.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_state.dart';
 import 'package:indrive_clone/src/presentation/utils/bloc_form_item.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final formKey = GlobalKey<FormState>();
+  AuthService authService = AuthService();
 
   LoginBloc() : super(LoginState()) {
     on<LoginInitEvent>((event, emit) {
@@ -31,11 +33,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                   :null),
           formKeyLogin: formKey));
     });
-    on<FormSubmit>((event, emit) {
+    on<FormSubmit>((event, emit) async {
       if (kDebugMode) {
         print("Emai: ${state.email.value}");
         print("Password: ${state.password.value}");
       }
+      await authService.login(state.email.value, state.password.value);
     });
   }
 }

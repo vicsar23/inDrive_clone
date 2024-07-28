@@ -36,12 +36,22 @@ class LoginContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _rotatedText(context, 1, "Login", Colors.white, 'login_page',
-                    27, FontWeight.bold),
+                    27, FontWeight.bold, null),
                 SizedBox(
                   height: sizeScreen.height * 0.1,
                 ),
-                _rotatedText(context, 1, "Registro", Colors.white,
-                    'register_page', 25, FontWeight.normal),
+                _rotatedText(
+                  context,
+                  1,
+                  "Registro",
+                  Colors.white,
+                  'register_page',
+                  25,
+                  FontWeight.normal,
+                  () {
+                    Navigator.pushNamed(context, "register_page");
+                  },
+                ),
               ],
             ),
           ),
@@ -147,7 +157,7 @@ Widget _textDontHaveAccount(BuildContext context) {
       SizedBox(width: 10),
       InkWell(
         onTap: () {
-          Navigator.pushReplacementNamed(context, 'register_page');
+          Navigator.pushNamed(context, 'register_page');
         },
         child: Text(
           "Regístrate",
@@ -197,11 +207,10 @@ Widget _rotatedText(
     final Color textColor,
     String routeName,
     double fontSize,
-    FontWeight fontWeight) {
+    FontWeight fontWeight,
+    void Function()? onTap) {
   return GestureDetector(
-    onTap: () {
-      Navigator.pushReplacementNamed(context, routeName);
-    },
+    onTap: onTap,
     child: RotatedBox(
       quarterTurns: quarterTurns,
       child: Text(

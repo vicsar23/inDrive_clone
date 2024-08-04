@@ -46,5 +46,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       emit(state.copyWith(response: response, formKeyLogin: formKey));
     });
+    on<FormReset>((event, emit) {
+      state.formKeyLogin?.currentState?.reset();
+      emit(state.copyWith(
+        formKeyLogin: formKey,
+        email: BlocFormItem(value: ''),
+        password: BlocFormItem(value: ''),
+      ));
+    });
   }
 }

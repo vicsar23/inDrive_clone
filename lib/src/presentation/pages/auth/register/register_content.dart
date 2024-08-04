@@ -148,9 +148,6 @@ class RegisterContent extends StatelessWidget {
                               context
                                   .read<RegisterBloc>()
                                   .add(FormSubmitRegister());
-                              context
-                                  .read<RegisterBloc>()
-                                  .add(FormResetRegister());
                             } else {
                               if (kDebugMode) {
                                 print("El formulario no es válido");

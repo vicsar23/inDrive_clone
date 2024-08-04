@@ -17,3 +17,4 @@ class PasswordChanged extends LoginEvent {
 }
 
 class FormSubmit extends LoginEvent {}
+class FormReset extends LoginEvent {}

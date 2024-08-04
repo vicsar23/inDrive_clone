@@ -1,5 +1,6 @@
 import 'package:indrive_clone/src/data/dataSource/remote/services/auth_service.dart';
 import 'package:indrive_clone/src/domain/models/auth_response.dart';
+import 'package:indrive_clone/src/domain/models/user.dart';
 import 'package:indrive_clone/src/domain/repository/auth_repository.dart';
 import 'package:indrive_clone/src/domain/utils/resource.dart';
 
@@ -11,5 +12,10 @@ class AuthRepositoryImplementation implements AuthRepository {
   @override
   Future<Resource<AuthResponse>> login(String email, String password) {
     return authService.login(email, password);
+  }
+
+  @override
+  Future<Resource<AuthResponse>> register(User user) {
+    return authService.register(user);
   }
 }

@@ -1,13 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indrive_clone/src/domain/useCases/auth/auth_use_cases.dart';
+import 'package:indrive_clone/src/domain/utils/resource.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/register/bloc/register_event.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/register/bloc/register_state.dart';
 import 'package:indrive_clone/src/presentation/utils/bloc_form_item.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
+  AuthUseCases authUseCases;
   final formKey = GlobalKey<FormState>();
-  RegisterBloc() : super(RegisterState()) {
+
+  RegisterBloc(this.authUseCases) : super(RegisterState()) {
     on<RegisterInitEvent>((event, emit) {
       emit(state.copyWith(formKey: formKey));
     });
@@ -73,7 +77,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
                       ? 'Las contraseñas no coinciden'
                       : null)));
     });
-    on<FormSubmitRegister>((event, emit) {
+    on<FormSubmitRegister>((event, emit) async {
       if (kDebugMode) {
         print("name: ${state.name.value}");
         print("sourceName: ${state.sourceName.value}");
@@ -82,18 +86,25 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         print("password: ${state.password.value}");
         print("confirmPassword: ${state.confirmPassword.value}");
       }
+
+      emit(state.copyWith(response: Loading(), formKey: formKey));
+      await Future.delayed(Duration(seconds: 2));
+      Resource response = await authUseCases.register.run(state.toUser());
+
+      emit(state.copyWith(response: response, formKey: formKey));
     });
 
     on<FormResetRegister>((event, emit) {
       state.formKey?.currentState?.reset();
-      // emit(state.copyWith(
-      //     formKey: formKey,
-      //     name: BlocFormItem(value: ''),
-      //     sourceName: BlocFormItem(value: ''),
-      //     phone: BlocFormItem(value: ''),
-      //     email: BlocFormItem(value: ''),
-      //     password: BlocFormItem(value: ''),
-      //     confirmPassword: BlocFormItem(value: '')));
+      emit(state.copyWith(
+          formKey: formKey,
+          name: BlocFormItem(value: ''),
+          sourceName: BlocFormItem(value: ''),
+          phone: BlocFormItem(value: ''),
+          email: BlocFormItem(value: ''),
+          password: BlocFormItem(value: ''),
+          confirmPassword: BlocFormItem(value: ''),
+          response: null));
     });
   }
 }

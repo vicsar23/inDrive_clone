@@ -8,9 +8,11 @@ import 'package:indrive_clone/src/presentation/pages/auth/register/bloc/register
 
 List<BlocProvider> blocProviders = [
   BlocProvider<LoginBloc>(
-    create: (context) => LoginBloc(locator<AuthUseCases>())..add(LoginInitEvent()),
+    create: (context) =>
+        LoginBloc(locator<AuthUseCases>())..add(LoginInitEvent()),
   ),
   BlocProvider<RegisterBloc>(
-    create: (context) => RegisterBloc()..add(RegisterInitEvent()),
+    create: (context) =>
+        RegisterBloc(locator<AuthUseCases>())..add(RegisterInitEvent()),
   ),
 ];

@@ -24,9 +24,12 @@ class _RegisterPageState extends State<RegisterPage> {
         if (response is ErrorData) {
           Fluttertoast.showToast(
               msg: response.message, toastLength: Toast.LENGTH_SHORT);
+       
         } else if (response is Success) {
           Fluttertoast.showToast(
-              msg: "Registro exitoso!", toastLength: Toast.LENGTH_LONG);
+                msg: "Registro exitoso!",
+                toastLength: Toast.LENGTH_LONG);
+          context.read<RegisterBloc>().add(FormResetRegister());
         }
       },
       child: BlocBuilder<RegisterBloc, RegisterState>(

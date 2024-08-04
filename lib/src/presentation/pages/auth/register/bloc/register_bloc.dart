@@ -103,8 +103,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           phone: BlocFormItem(value: ''),
           email: BlocFormItem(value: ''),
           password: BlocFormItem(value: ''),
-          confirmPassword: BlocFormItem(value: ''),
-          response: null));
+          confirmPassword: BlocFormItem(value: '')));
     });
   }
 }

@@ -26,12 +26,12 @@ class RegisterState extends Equatable {
   });
 
   toUser() => User(
-    name: name.value,
-    lastname: sourceName.value,
-    email: email.value,
-    phone: phone.value,
-    password: password.value,
-  );
+        name: name.value,
+        lastname: sourceName.value,
+        email: email.value,
+        phone: phone.value,
+        password: password.value,
+      );
 
   RegisterState copyWith(
       {BlocFormItem? name,
@@ -43,15 +43,14 @@ class RegisterState extends Equatable {
       GlobalKey<FormState>? formKey,
       Resource? response}) {
     return RegisterState(
-      name: name ?? this.name,
-      sourceName: sourceName ?? this.sourceName,
-      email: email ?? this.email,
-      phone: phone ?? this.phone,
-      password: password ?? this.password,
-      confirmPassword: confirmPassword ?? this.confirmPassword,
-      formKey: formKey,
-      response: response ?? this.response,
-    );
+        name: name ?? this.name,
+        sourceName: sourceName ?? this.sourceName,
+        email: email ?? this.email,
+        phone: phone ?? this.phone,
+        password: password ?? this.password,
+        confirmPassword: confirmPassword ?? this.confirmPassword,
+        formKey: formKey,
+        response: response);
   }
 
   @override

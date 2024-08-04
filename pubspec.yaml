@@ -34,6 +34,8 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.6
   http: ^1.2.2
+  injectable: ^2.4.4
+  get_it: ^7.7.0
 
 dev_dependencies:
 
@@ -43,6 +45,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  injectable_generator: ^2.6.2
+  build_runner: ^2.4.11
   flutter_test:
     sdk: flutter
 

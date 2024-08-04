@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:indrive_clone/bloc_provider.dart';
 import 'package:indrive_clone/injection.dart';
 import 'package:indrive_clone/src/config/theme/app_theme.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: blocProviders,
       child: MaterialApp(
+        builder:FToastBuilder(),
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: AppTheme(selectedColor: 0).getTheme(),

@@ -36,6 +36,7 @@ dependencies:
   http: ^1.2.2
   injectable: ^2.4.4
   get_it: ^7.7.0
+  fluttertoast: ^8.2.6
 
 dev_dependencies:
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:indrive_clone/src/domain/utils/resource.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_bloc.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_state.dart';
@@ -23,9 +24,12 @@ class _LoginPageState extends State<LoginPage> {
         listener: (context, state) {
           final response = state.response;
           if (response is ErrorData) {
-            print("Error Data: ${response.message}");
+            Fluttertoast.showToast(
+                msg: response.message, toastLength: Toast.LENGTH_LONG);
           } else if (response is Success) {
-            print("Success Data: ${response.data}");
+            Fluttertoast.showToast(
+                msg: "Inicio de sesión exitoso!",
+                toastLength: Toast.LENGTH_LONG);
           }
         },
         child: BlocBuilder<LoginBloc, LoginState>(

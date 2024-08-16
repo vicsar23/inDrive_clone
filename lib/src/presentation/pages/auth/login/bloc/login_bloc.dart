@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indrive_clone/src/domain/models/auth_response.dart';
 import 'package:indrive_clone/src/domain/useCases/auth/auth_use_cases.dart';
 import 'package:indrive_clone/src/domain/utils/resource.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_event.dart';
@@ -12,8 +13,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   AuthUseCases authUseCases;
 
   LoginBloc(this.authUseCases) : super(LoginState()) {
-    on<LoginInitEvent>((event, emit) {
+    on<LoginInitEvent>((event, emit) async {
+      AuthResponse? authResponse = await authUseCases.getUserSession.run();
+      print("Auth response session: ${authResponse?.toJson()}");
       emit(state.copyWith(formKeyLogin: formKey));
+      if (authResponse != null) {
+        emit(state.copyWith(
+            response: Success(authResponse), formKeyLogin: formKey));
+      }
     });
     on<EmailChanged>((event, emit) {
       emit(state.copyWith(
@@ -53,6 +60,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         email: BlocFormItem(value: ''),
         password: BlocFormItem(value: ''),
       ));
+    });
+
+    on<SaveUserSession>((event, emit) async {
+      await authUseCases.saveUserSession.run(event.authResponse);
     });
   }
 }

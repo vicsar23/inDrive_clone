@@ -36,8 +36,6 @@ class User {
         password: json["password"],
         image: json["image"],
         notificationToken: json["notification_token"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
         roles: List<Role>.from(json["roles"].map((x) => Role.fromJson(x))),
       );
 

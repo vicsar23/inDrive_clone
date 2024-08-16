@@ -1,4 +1,5 @@
 
+import 'package:indrive_clone/src/domain/models/auth_response.dart';
 import 'package:indrive_clone/src/presentation/utils/bloc_form_item.dart';
 
 abstract class RegisterEvent{}
@@ -33,3 +34,9 @@ class ConfirmPasswordChangedRegister extends RegisterEvent{
 
 class FormSubmitRegister extends RegisterEvent{}
 class FormResetRegister extends RegisterEvent{}
+
+class SaveUserSession extends RegisterEvent {
+  final AuthResponse authResponse;
+
+  SaveUserSession({required this.authResponse});
+}

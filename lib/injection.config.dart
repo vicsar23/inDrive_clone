@@ -9,6 +9,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:indrive_clone/src/data/dataSource/local/shared_pref.dart'
+    as _i210;
 import 'package:indrive_clone/src/data/dataSource/remote/services/auth_service.dart'
     as _i1060;
 import 'package:indrive_clone/src/di/AppModule.dart' as _i479;
@@ -30,6 +32,7 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final appModule = _$AppModule();
+    gh.factory<_i210.SharedPref>(() => appModule.sharedPref);
     gh.factory<_i1060.AuthService>(() => appModule.authService);
     gh.factory<_i397.AuthRepository>(() => appModule.authRepository);
     gh.factory<_i74.AuthUseCases>(() => appModule.authUseCases);

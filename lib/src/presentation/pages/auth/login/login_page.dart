@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:indrive_clone/src/domain/models/auth_response.dart';
 import 'package:indrive_clone/src/domain/utils/resource.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_bloc.dart';
 import 'package:indrive_clone/src/presentation/pages/auth/login/bloc/login_event.dart';
@@ -31,7 +32,13 @@ class _LoginPageState extends State<LoginPage> {
             Fluttertoast.showToast(
                 msg: "Inicio de sesión exitoso!",
                 toastLength: Toast.LENGTH_LONG);
-                context.read<LoginBloc>().add(FormReset());
+            context.read<LoginBloc>().add(FormReset());
+
+            final authResponse = response.data as AuthResponse;
+            context
+                .read<LoginBloc>()
+                .add(SaveUserSession(authResponse: authResponse));
+            Navigator.pushNamedAndRemoveUntil(context, 'client/home', (route) => false);
           }
         },
         child: BlocBuilder<LoginBloc, LoginState>(

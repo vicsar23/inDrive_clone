@@ -37,6 +37,7 @@ dependencies:
   injectable: ^2.4.4
   get_it: ^7.7.0
   fluttertoast: ^8.2.6
+  shared_preferences: ^2.3.1
 
 dev_dependencies:
 

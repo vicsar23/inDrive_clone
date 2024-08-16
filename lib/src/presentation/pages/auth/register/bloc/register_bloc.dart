@@ -105,5 +105,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           password: BlocFormItem(value: ''),
           confirmPassword: BlocFormItem(value: '')));
     });
+
+    on<SaveUserSession>((event, emit) async {
+      await authUseCases.saveUserSession.run(event.authResponse);
+    });
   }
 }

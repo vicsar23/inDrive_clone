@@ -35,4 +35,10 @@ class AuthRepositoryImplementation implements AuthRepository {
     }
     return null;
   }
+  
+  @override
+  Future<bool> logout() async {
+    sharedPref.remove('user');
+    return Future.value(true);
+  }
 }

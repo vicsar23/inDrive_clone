@@ -5,13 +5,13 @@ import 'package:indrive_clone/src/domain/repository/auth_repository.dart';
 import 'package:indrive_clone/src/domain/useCases/auth/auth_use_cases.dart';
 import 'package:indrive_clone/src/domain/useCases/auth/get_user_session_use_case.dart';
 import 'package:indrive_clone/src/domain/useCases/auth/login_use_case.dart';
+import 'package:indrive_clone/src/domain/useCases/auth/logout_use_case.dart';
 import 'package:indrive_clone/src/domain/useCases/auth/register_use_cases.dart';
 import 'package:indrive_clone/src/domain/useCases/auth/save_user_session_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 @module
 abstract class AppModule {
-
   SharedPref get sharedPref => SharedPref();
   @injectable
   AuthService get authService => AuthService();
@@ -25,6 +25,6 @@ abstract class AppModule {
       login: LoginUseCase(authRepository),
       register: RegisterUseCases(authRepository),
       saveUserSession: SaveUserSessionUseCase(authRepository),
-      getUserSession: GetUserSessionUseCase(authRepository)
-      );
+      getUserSession: GetUserSessionUseCase(authRepository),
+      logout: LogoutUseCase(authRepository));
 }

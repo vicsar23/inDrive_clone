@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indrive_clone/main.dart';
 import 'package:indrive_clone/src/presentation/pages/client/home/bloc/client_home_bloc.dart';
 import 'package:indrive_clone/src/presentation/pages/client/home/bloc/client_home_event.dart';
 import 'package:indrive_clone/src/presentation/pages/client/home/bloc/client_home_state.dart';
@@ -49,6 +50,15 @@ class _ClientHomePageState extends State<ClientHomePage> {
                         .read<ClientHomeBloc>()
                         .add(ChangeDrawerPage(pageIndex: 0));
                     Navigator.pop(context);
+                  }),
+              ListTile(
+                  title: Text("Cerrar sesión"),
+                  onTap: () {
+                    context.read<ClientHomeBloc>().add(Logout());
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyApp()),
+                        (context) => false);
                   })
             ],
           ));

@@ -8,6 +8,7 @@ import 'package:indrive_clone/src/presentation/pages/auth/register/bloc/register
 import 'package:indrive_clone/src/presentation/pages/client/home/bloc/client_home_bloc.dart';
 import 'package:indrive_clone/src/presentation/pages/profile/info/bloc/profile_info_bloc.dart';
 import 'package:indrive_clone/src/presentation/pages/profile/info/bloc/profile_info_event.dart';
+import 'package:indrive_clone/src/presentation/pages/profile/update/bloc/profile_update_bloc.dart';
 
 List<BlocProvider> blocProviders = [
   BlocProvider<LoginBloc>(
@@ -23,5 +24,8 @@ List<BlocProvider> blocProviders = [
   ),
   BlocProvider<ProfileInfoBloc>(
     create: (context) => ProfileInfoBloc(locator<AuthUseCases>())..add(GetUserInfo()),
+  ),
+  BlocProvider<ProfileUpdateBloc>(
+    create: (context) => ProfileUpdateBloc(),
   ),
 ];

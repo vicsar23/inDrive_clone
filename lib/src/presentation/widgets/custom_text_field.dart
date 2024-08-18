@@ -7,14 +7,17 @@ class CustomTextField extends StatelessWidget {
   Function(String text) onChanged;
   String? Function(String?)? validator;
   Color? backgoundColor;
+  String? initialValue;
 
   CustomTextField(
       {super.key,
       required this.title,
       required this.icon,
       this.margin = const EdgeInsets.only(top: 40, left: 4, right: 4),
-      required this.onChanged, 
-      this.validator, this.backgoundColor = Colors.white});
+      required this.onChanged,
+      this.validator,
+      this.backgoundColor = Colors.white,
+      this.initialValue});
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +31,10 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextFormField(
         validator: validator,
-        onChanged: (text){
+        onChanged: (text) {
           onChanged(text);
         },
+        initialValue: initialValue,
         decoration: InputDecoration(
           border: InputBorder.none,
           label: Text(title),

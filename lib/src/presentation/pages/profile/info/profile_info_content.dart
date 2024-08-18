@@ -15,7 +15,7 @@ class ProfileInfoContent extends StatelessWidget {
             _headerProfile(size),
             Spacer(),
             _actionProfile('Editar Perfil', Icons.edit, () {
-              Navigator.pushNamed(context, 'profile/update');
+              Navigator.pushNamed(context, 'profile/update', arguments: user);
             }),
             _actionProfile('Cerrar sesión', Icons.settings_power, () {}),
             SizedBox(
@@ -32,7 +32,7 @@ class ProfileInfoContent extends StatelessWidget {
 Widget _cardUserInfo(Size size, User? user) {
   return Container(
     margin: EdgeInsets.only(left: 20, right: 20, top: size.height * 0.14),
-    height: size.height * 0.25,
+    height: size.height * 0.28,
     width: size.width,
     child: Card(
       color: Colors.white,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:indrive_clone/src/domain/models/user.dart';
 
 class ProfileInfoContent extends StatelessWidget {
-  const ProfileInfoContent({super.key});
+  User? user;
+  ProfileInfoContent({super.key, this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +21,17 @@ class ProfileInfoContent extends StatelessWidget {
             )
           ],
         ),
-        _cardUserInfo(size)
+        _cardUserInfo(size, user)
       ],
     );
   }
 }
 
-Widget _cardUserInfo(Size size) {
+Widget _cardUserInfo(Size size, User? user) {
   return Container(
     margin: EdgeInsets.only(left: 20, right: 20, top: size.height * 0.14),
     height: size.height * 0.25,
-    width: size.width ,
+    width: size.width,
     child: Card(
       color: Colors.white,
       surfaceTintColor: Colors.white,
@@ -37,7 +39,7 @@ Widget _cardUserInfo(Size size) {
         children: [
           Container(
             width: 120,
-            margin: EdgeInsets.only(top: 15,bottom: 14),
+            margin: EdgeInsets.only(top: 15, bottom: 14),
             child: AspectRatio(
               aspectRatio: 1,
               child: ClipOval(
@@ -50,11 +52,25 @@ Widget _cardUserInfo(Size size) {
                 ),
               ),
             ),
-          ), 
-          Text('Nombre de usuaruio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-          Text('Correro', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.grey[600]),),
-          Text('5610371157',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.grey[600]),),
-
+          ),
+          Text(
+            '${user?.name} ${user?.lastname}',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          Text(
+            user?.email ?? 'Correo electrónico',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.grey[600]),
+          ),
+          Text(
+            user?.phone ?? 'Teléfono',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.grey[600]),
+          ),
         ],
       ),
     ),

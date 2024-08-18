@@ -19,7 +19,7 @@ class CustomTextFieldOutline extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: margin, // EdgeInsets.only(top: 40, left: 4, right: 4),
-      height: 45,
+      height: 50,
       // decoration: BoxDecoration(
       //   color: Color.fromRGBO(255, 255, 255, 0.2),
       //   borderRadius: BorderRadius.only(

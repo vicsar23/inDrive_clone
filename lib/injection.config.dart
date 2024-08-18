@@ -13,11 +13,17 @@ import 'package:indrive_clone/src/data/dataSource/local/shared_pref.dart'
     as _i210;
 import 'package:indrive_clone/src/data/dataSource/remote/services/auth_service.dart'
     as _i1060;
+import 'package:indrive_clone/src/data/dataSource/remote/services/users_service.dart'
+    as _i1039;
 import 'package:indrive_clone/src/di/AppModule.dart' as _i479;
 import 'package:indrive_clone/src/domain/repository/auth_repository.dart'
     as _i397;
+import 'package:indrive_clone/src/domain/repository/users_repository.dart'
+    as _i377;
 import 'package:indrive_clone/src/domain/useCases/auth/auth_use_cases.dart'
     as _i74;
+import 'package:indrive_clone/src/domain/useCases/users/users_use_cases.dart'
+    as _i233;
 import 'package:injectable/injectable.dart' as _i526;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -34,8 +40,11 @@ extension GetItInjectableX on _i174.GetIt {
     final appModule = _$AppModule();
     gh.factory<_i210.SharedPref>(() => appModule.sharedPref);
     gh.factory<_i1060.AuthService>(() => appModule.authService);
+    gh.factory<_i1039.UsersService>(() => appModule.usersService);
     gh.factory<_i397.AuthRepository>(() => appModule.authRepository);
+    gh.factory<_i377.UsersRepository>(() => appModule.usersRepository);
     gh.factory<_i74.AuthUseCases>(() => appModule.authUseCases);
+    gh.factory<_i233.UsersUseCases>(() => appModule.usersUseCases);
     return this;
   }
 }

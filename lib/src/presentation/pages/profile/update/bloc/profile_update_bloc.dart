@@ -1,14 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indrive_clone/src/domain/useCases/users/users_use_cases.dart';
+import 'package:indrive_clone/src/domain/utils/resource.dart';
 import 'package:indrive_clone/src/presentation/pages/profile/update/bloc/profile_update_event.dart';
 import 'package:indrive_clone/src/presentation/pages/profile/update/bloc/profile_update_state.dart';
 import 'package:indrive_clone/src/presentation/utils/bloc_form_item.dart';
 
 class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState> {
+  UsersUseCases usersUseCases;
   final formKey = GlobalKey<FormState>();
-  ProfileUpdateBloc() : super(ProfileUpdateState()) {
+  ProfileUpdateBloc(this.usersUseCases) : super(ProfileUpdateState()) {
     on<ProfileUpdateInitEvent>((event, emit) {
       emit(state.copyWith(
+          id: event.user?.id,
           name: BlocFormItem(value: event.user?.name ?? ''),
           lastName: BlocFormItem(value: event.user?.lastname ?? ''),
           phone: BlocFormItem(value: event.user?.phone ?? ''),
@@ -41,10 +46,18 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState> {
       ));
     });
 
-    on<FormSubmit>((event, emit) {
-      print('Name: ${state.name.value}');
-      print('LastName: ${state.lastName.value}');
-      print('Phone: ${state.phone.value}');
+    on<FormSubmit>((event, emit) async {
+      if (kDebugMode) {
+        print('Name: ${state.name.value}');
+        print('LastName: ${state.lastName.value}');
+        print('Phone: ${state.phone.value}');
+      }
+
+      emit(state.copyWith(response: Loading(), formKey: formKey));
+
+      Resource response =
+          await usersUseCases.update.run(state.id, state.toUser(), null);
+      emit(state.copyWith(response: response, formKey: formKey));
     });
   }
 }

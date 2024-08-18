@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final EdgeInsetsGeometry margin;
   Function(String text) onChanged;
   String? Function(String?)? validator;
+  Color? backgoundColor;
 
   CustomTextField(
       {super.key,
@@ -13,7 +14,7 @@ class CustomTextField extends StatelessWidget {
       required this.icon,
       this.margin = const EdgeInsets.only(top: 40, left: 4, right: 4),
       required this.onChanged, 
-      this.validator});
+      this.validator, this.backgoundColor = Colors.white});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class CustomTextField extends StatelessWidget {
       margin: margin, // EdgeInsets.only(top: 40, left: 4, right: 4),
       height: 50,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: backgoundColor,
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
       ),

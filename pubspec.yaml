@@ -39,6 +39,9 @@ dependencies:
   fluttertoast: ^8.2.6
   shared_preferences: ^2.3.1
   image_picker: ^1.0.7
+  path: ^1.8.3
+  http_parser: ^4.0.2
+
 
 dev_dependencies:
 

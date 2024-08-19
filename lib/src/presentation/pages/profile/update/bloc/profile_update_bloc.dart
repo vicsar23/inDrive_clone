@@ -63,7 +63,7 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState> {
       emit(state.copyWith(response: Loading(), formKey: formKey));
 
       Resource response =
-          await usersUseCases.update.run(state.id, state.toUser(), null);
+          await usersUseCases.update.run(state.id, state.toUser(), state.image);
       emit(state.copyWith(response: response, formKey: formKey));
     });
 

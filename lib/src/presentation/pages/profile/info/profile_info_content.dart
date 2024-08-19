@@ -45,13 +45,20 @@ Widget _cardUserInfo(Size size, User? user) {
             child: AspectRatio(
               aspectRatio: 1,
               child: ClipOval(
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/img/user_image.png',
-                  image:
-                      'https://htmlstream.com/preview/unify-v2.6/assets/img-temp/400x450/img5.jpg',
-                  fit: BoxFit.cover,
-                  fadeInDuration: Duration(seconds: 1),
-                ),
+                child: user != null
+                    ? user.image != null
+                        ? FadeInImage.assetNetwork(
+                            placeholder: 'assets/img/user_image.png',
+                            image: user.image!,
+                            fit: BoxFit.cover,
+                            fadeInDuration: Duration(seconds: 1),
+                          )
+                        : Image.asset(
+                            'assets/img/user_image.png',
+                          )
+                    : Image.asset(
+                        'assets/img/user_image.png',
+                      ),
               ),
             ),
           ),

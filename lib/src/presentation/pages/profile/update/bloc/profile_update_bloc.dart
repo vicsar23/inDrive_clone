@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:indrive_clone/src/domain/models/auth_response.dart';
 import 'package:indrive_clone/src/domain/useCases/auth/auth_use_cases.dart';
 import 'package:indrive_clone/src/domain/useCases/users/users_use_cases.dart';
@@ -71,6 +74,23 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState> {
       authResponse.user.phone = event.user.phone;
       authResponse.user.image = event.user.image;
       await authUseCases.saveUserSession.run(authResponse);
+    });
+
+    on<PickImage>((event, emit) async {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        // SI EL USUARIO SELECCIONO UNA IMAGEN
+        emit(state.copyWith(image: File(image.path), formKey: formKey));
+      }
+    });
+    on<TakePhoto>((event, emit) async {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        // SI EL USUARIO SELECCIONO UNA IMAGEN
+        emit(state.copyWith(image: File(image.path), formKey: formKey));
+      }
     });
   }
 }

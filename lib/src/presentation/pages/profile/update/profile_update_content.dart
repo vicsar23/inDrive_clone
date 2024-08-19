@@ -5,6 +5,7 @@ import 'package:indrive_clone/src/presentation/pages/profile/update/bloc/profile
 import 'package:indrive_clone/src/presentation/pages/profile/update/bloc/profile_update_event.dart';
 import 'package:indrive_clone/src/presentation/pages/profile/update/bloc/profile_update_state.dart';
 import 'package:indrive_clone/src/presentation/utils/bloc_form_item.dart';
+import 'package:indrive_clone/src/presentation/utils/gallery_or_photo_dialog.dart';
 import 'package:indrive_clone/src/presentation/widgets/custom_text_field.dart';
 import 'package:indrive_clone/src/presentation/widgets/default_icon_back.dart';
 
@@ -43,6 +44,45 @@ class ProfileUpdateContent extends StatelessWidget {
     );
   }
 
+  Widget _imageUser(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        GalleryOrPhotoDialog(
+            context,
+            () => {context.read<ProfileUpdateBloc>().add(PickImage())},
+            () => {context.read<ProfileUpdateBloc>().add(TakePhoto())});
+      },
+      child: Container(
+        width: 115,
+        margin: EdgeInsets.only(top: 50, bottom: 15),
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: ClipOval(
+            child: state.image != null
+                ? Image.file(
+                    state.image!,
+                    fit: BoxFit.cover,
+                  )
+                : user != null
+                    ? user!.image != null
+                        ? FadeInImage.assetNetwork(
+                            placeholder: 'assets/img/user_image.png',
+                            image: user!.image!,
+                            fit: BoxFit.cover,
+                            fadeInDuration: Duration(seconds: 1),
+                          )
+                        : Image.asset(
+                            'assets/img/user_image.png',
+                          )
+                    : Image.asset(
+                        'assets/img/user_image.png',
+                      ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _cardUserInfo(
     Size size,
     BuildContext context,
@@ -56,22 +96,7 @@ class ProfileUpdateContent extends StatelessWidget {
         surfaceTintColor: Colors.white,
         child: Column(
           children: [
-            Container(
-              width: 120,
-              margin: EdgeInsets.only(top: 15, bottom: 14),
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: ClipOval(
-                  child: FadeInImage.assetNetwork(
-                    placeholder: 'assets/img/user_image.png',
-                    image:
-                        'https://htmlstream.com/preview/unify-v2.6/assets/img-temp/400x450/img5.jpg',
-                    fit: BoxFit.cover,
-                    fadeInDuration: Duration(seconds: 1),
-                  ),
-                ),
-              ),
-            ),
+            _imageUser(context),
             CustomTextField(
                 validator: (value) {
                   return state!.name.error;

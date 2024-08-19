@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indrive_clone/src/domain/models/auth_response.dart';
+import 'package:indrive_clone/src/domain/useCases/auth/auth_use_cases.dart';
 import 'package:indrive_clone/src/domain/useCases/users/users_use_cases.dart';
 import 'package:indrive_clone/src/domain/utils/resource.dart';
 import 'package:indrive_clone/src/presentation/pages/profile/update/bloc/profile_update_event.dart';
@@ -8,9 +10,11 @@ import 'package:indrive_clone/src/presentation/pages/profile/update/bloc/profile
 import 'package:indrive_clone/src/presentation/utils/bloc_form_item.dart';
 
 class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState> {
+  AuthUseCases authUseCases;
   UsersUseCases usersUseCases;
   final formKey = GlobalKey<FormState>();
-  ProfileUpdateBloc(this.usersUseCases) : super(ProfileUpdateState()) {
+  ProfileUpdateBloc(this.usersUseCases, this.authUseCases)
+      : super(ProfileUpdateState()) {
     on<ProfileUpdateInitEvent>((event, emit) {
       emit(state.copyWith(
           id: event.user?.id,
@@ -58,6 +62,15 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState> {
       Resource response =
           await usersUseCases.update.run(state.id, state.toUser(), null);
       emit(state.copyWith(response: response, formKey: formKey));
+    });
+
+    on<UpdateUserSession>((event, emit) async {
+      AuthResponse authResponse = await authUseCases.getUserSession.run();
+      authResponse.user.name = event.user.name;
+      authResponse.user.lastname = event.user.lastname;
+      authResponse.user.phone = event.user.phone;
+      authResponse.user.image = event.user.image;
+      await authUseCases.saveUserSession.run(authResponse);
     });
   }
 }

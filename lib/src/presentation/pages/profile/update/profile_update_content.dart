@@ -16,27 +16,30 @@ class ProfileUpdateContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Stack(
-      children: [
-        Column(
-          children: [
-            _headerProfile(size),
-            Spacer(),
-            _actionProfile(context, 'ACTUALIZAR USUARIO', Icons.check),
-            SizedBox(
-              height: 40,
-            )
-          ],
-        ),
-        _cardUserInfo(size, context),
-        DefaultIconBack(
-          color: Colors.white,
-          margin: EdgeInsets.only(
-            top: 60,
-            left: 30,
+    return Form(
+      key: state.formKey,
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              _headerProfile(size),
+              Spacer(),
+              _actionProfile(context, 'ACTUALIZAR USUARIO', Icons.check),
+              SizedBox(
+                height: 40,
+              )
+            ],
           ),
-        ),
-      ],
+          _cardUserInfo(size, context),
+          DefaultIconBack(
+            color: Colors.white,
+            margin: EdgeInsets.only(
+              top: 60,
+              left: 30,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

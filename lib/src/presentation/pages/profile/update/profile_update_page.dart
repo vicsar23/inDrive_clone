@@ -43,7 +43,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
             User user = response.data as User;
             Fluttertoast.showToast(
                 msg: 'Actualizacion exitosa', toastLength: Toast.LENGTH_LONG);
-            // context.read<ProfileUpdateBloc>().add(UpdateUserSession(user: user));
+            context.read<ProfileUpdateBloc>().add(UpdateUserSession(user: user));
             Future.delayed(Duration(seconds: 1), () {
               context.read<ProfileInfoBloc>().add(GetUserInfo());
             });

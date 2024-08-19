@@ -4,6 +4,7 @@ import 'package:indrive_clone/main.dart';
 import 'package:indrive_clone/src/presentation/pages/client/home/bloc/client_home_bloc.dart';
 import 'package:indrive_clone/src/presentation/pages/client/home/bloc/client_home_event.dart';
 import 'package:indrive_clone/src/presentation/pages/client/home/bloc/client_home_state.dart';
+import 'package:indrive_clone/src/presentation/pages/client/mapSeeker/client_map_seeker_page.dart';
 import 'package:indrive_clone/src/presentation/pages/profile/info/profile_info_page.dart';
 
 class ClientHomePage extends StatefulWidget {
@@ -14,7 +15,10 @@ class ClientHomePage extends StatefulWidget {
 }
 
 class _ClientHomePageState extends State<ClientHomePage> {
-  List<Widget> pageList = <Widget>[ProfileInfoPage()];
+  List<Widget> pageList = <Widget>[
+    ClientMapSeekerPage(),
+    ProfileInfoPage(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +47,16 @@ class _ClientHomePageState extends State<ClientHomePage> {
                   child: Text('Menú del cliente',
                       style: TextStyle(color: Colors.white))),
               ListTile(
-                  title: Text("Perfil de usuaruio"),
+                  title: Text("Mapa de búsqueda"),
+                  selected: state.pageIndex == 1,
+                  onTap: () {
+                    context
+                        .read<ClientHomeBloc>()
+                        .add(ChangeDrawerPage(pageIndex: 1));
+                    Navigator.pop(context);
+                  }),
+              ListTile(
+                  title: Text("Perfil de usuario"),
                   selected: state.pageIndex == 0,
                   onTap: () {
                     context

@@ -46,7 +46,7 @@ class GeolocatorRepositoryImpl implements GeolocatorRepository {
   Future<BitmapDescriptor> createMarkerFromAsset(String path) async {
     ImageConfiguration configuration = ImageConfiguration();
     BitmapDescriptor descriptor =
-        await BitmapDescriptor.asset(configuration, path);
+        await BitmapDescriptor.fromAssetImage(configuration, path);
     return descriptor;
   }
 

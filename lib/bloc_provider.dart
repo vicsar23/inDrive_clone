@@ -35,6 +35,6 @@ List<BlocProvider> blocProviders = [
         ProfileUpdateBloc(locator<UsersUseCases>(), locator<AuthUseCases>()),
   ),
   BlocProvider<ClientMapSeekerBloc>(
-    create: (context) => ClientMapSeekerBloc(locator<GeolocatorUseCases>())..add(FindPosition()),
+    create: (context) => ClientMapSeekerBloc(locator<GeolocatorUseCases>())..add(ClienteMapSeekerInitEvent()),
   ),
 ];

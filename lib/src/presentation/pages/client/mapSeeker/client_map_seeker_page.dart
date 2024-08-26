@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:indrive_clone/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_bloc.dart';
+import 'package:indrive_clone/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_event.dart';
 import 'package:indrive_clone/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_state.dart';
 
 class ClientMapSeekerPage extends StatefulWidget {
@@ -14,8 +15,13 @@ class ClientMapSeekerPage extends StatefulWidget {
 }
 
 class _ClientMapSeekerPageState extends State<ClientMapSeekerPage> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<ClientMapSeekerBloc>().add(FindPosition());
+    });
+  }
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -37,21 +43,11 @@ class _ClientMapSeekerPageState extends State<ClientMapSeekerPage> {
             mapType: MapType.normal,
             initialCameraPosition: _kGooglePlex,
             onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
+              state.controller?.complete(controller);
             },
           );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
-      ),
     );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }

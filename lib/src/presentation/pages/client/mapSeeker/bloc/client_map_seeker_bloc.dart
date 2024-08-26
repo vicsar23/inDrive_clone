@@ -21,13 +21,28 @@ class ClientMapSeekerBloc
     on<FindPosition>((event, emit) async {
       Position position = await geolocatorUseCases.findPosition.run();
 
-      emit(state.copyWith(position: position, controller: controller));
+      //emit(state.copyWith(position: position, controller: controller));
       if (kDebugMode) {
         print('Position latitude: ${position.latitude}');
         print('Position longitude: ${position.longitude}');
       }
       add(ChangeCameraPosition(
-          lat: state.position!.latitude, lng: state.position!.longitude));
+          lat: position.latitude, lng: position.longitude));
+
+      BitmapDescriptor imageMarker = await geolocatorUseCases.createMarker
+          .run('assets/img/location_blue.png');
+      Marker marker = geolocatorUseCases.getMarker.run(
+          'MyLocation',
+          position.latitude,
+          position.longitude,
+          'Mi posición',
+          '',
+          imageMarker);
+
+      emit(state.copyWith(
+          position: position,
+          markers: {marker.markerId: marker},
+          controller: controller));
     });
 
     on<ChangeCameraPosition>((event, emit) async {

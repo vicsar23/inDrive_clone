@@ -14,8 +14,10 @@ import 'package:indrive_clone/src/domain/useCases/auth/login_use_case.dart';
 import 'package:indrive_clone/src/domain/useCases/auth/logout_use_case.dart';
 import 'package:indrive_clone/src/domain/useCases/auth/register_use_cases.dart';
 import 'package:indrive_clone/src/domain/useCases/auth/save_user_session_use_case.dart';
+import 'package:indrive_clone/src/domain/useCases/geolocator/create_marker_use_case.dart';
 import 'package:indrive_clone/src/domain/useCases/geolocator/find_position_use_case.dart';
 import 'package:indrive_clone/src/domain/useCases/geolocator/geolocator_use_cases.dart';
+import 'package:indrive_clone/src/domain/useCases/geolocator/get_marker_use_case.dart';
 import 'package:indrive_clone/src/domain/useCases/users/update_user_use_case.dart';
 import 'package:indrive_clone/src/domain/useCases/users/users_use_cases.dart';
 import 'package:injectable/injectable.dart';
@@ -61,5 +63,7 @@ abstract class AppModule {
       UsersUseCases(update: UpdateUserUseCase(usersRepository));
   @injectable
   GeolocatorUseCases get geolocatorUseCases => GeolocatorUseCases(
+      createMarker: CreateMarkerUseCase(geolocatorRepository),
+      getMarker: GetMarkerUseCase(geolocatorRepository),
       findPosition: FindPositionUseCase(geolocatorRepository));
 }
